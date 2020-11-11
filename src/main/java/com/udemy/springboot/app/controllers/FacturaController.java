@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ import com.udemy.springboot.app.models.entity.Producto;
 import com.udemy.springboot.app.models.service.IClienteService;
 
 @Controller
+@Secured("ROLE_ADMIN")
 @RequestMapping("/factura")
 @SessionAttributes("factura")
 public class FacturaController {

@@ -42,7 +42,7 @@
 					<div class="form-group row">
 
 						<label for="observacion" class="col-sm-2 col-form-label"
-							th:text="'Observación'"></label>
+							th:text="'ObservaciÃ³n'"></label>
 						<div class="col-sm-6">
 							<input type="text" th:field="*{observacion}" class="form-control" />
 						</div>
@@ -73,12 +73,12 @@
 						<tbody>
 						</tbody>
 					</table>
-					<h5><span class="badge badge-secondary" id="gran_total"></span></h5>
+					<h5>Total <span class="badge badge-secondary" id="gran_total">0</span></h5>
 
-					<div class="form-group row">
+					<div class="form-group row float-left">
 						<div class="col-sm-6"></div>
 						<input type="submit" th:value="${titulo}"
-							class="btn btn-secondary" />
+							class="btn btn-secondary " />
 					</div>
 				</form>
 
