@@ -230,11 +230,13 @@ public class ClienteController {
 			flash.addFlashAttribute("success",
 					messageSource.getMessage("text.cliente.flash.eliminar.success", null, locale));
 
-			if (uploadFileService.delete(cliente.getFoto())) {
-				String mensajeFotoEliminar = String.format(
-						messageSource.getMessage("text.cliente.flash.foto.eliminar.success", null, locale),
-						cliente.getFoto());
-				flash.addFlashAttribute("info", mensajeFotoEliminar);
+			if (cliente.getFoto() != null) {
+				if (uploadFileService.delete(cliente.getFoto())) {
+					String mensajeFotoEliminar = String.format(
+							messageSource.getMessage("text.cliente.flash.foto.eliminar.success", null, locale),
+							cliente.getFoto());
+					flash.addFlashAttribute("info", mensajeFotoEliminar);
+				}
 			}
 
 		}
