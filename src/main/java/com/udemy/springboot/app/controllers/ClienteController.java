@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -62,20 +63,23 @@ public class ClienteController {
 
 	@Secured({ "ROLE_USER" })
 	@GetMapping(value = "/uploads/{filename:.+}")
-	public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
-
+	public ResponseEntity<Object> verFoto(@PathVariable String filename) {
+		
 		Resource recurso = null;
 
 		try {
 			recurso = uploadFileService.load(filename);
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
+					.body(recurso);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+		        return ResponseEntity
+		            .status(HttpStatus.BAD_REQUEST)
+		            .body("Error Message");
 		}
 
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"")
-				.body(recurso);
+	
 	}
 
 	@PreAuthorize("hasRole('ROLE_USER')")
