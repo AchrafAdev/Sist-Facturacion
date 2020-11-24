@@ -18,6 +18,8 @@ public interface IClienteService {
 	
 	public void save(Cliente cliente);
 	
+	public Cliente saveApi(Cliente cliente);
+	
 	public Cliente findOne(Long id);
 	
 	public Cliente fetchByIdWithFacturas(Long id);

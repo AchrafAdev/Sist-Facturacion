@@ -41,6 +41,14 @@ public class ClienteServiceImpl implements IClienteService {
 		
 		
 	}
+	
+	@Override
+	@Transactional
+	public Cliente saveApi(Cliente cliente) {
+		return clienteDao.save(cliente);
+		
+		
+	}
 
 	@Override
 	@Transactional(readOnly = true)

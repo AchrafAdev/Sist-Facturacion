@@ -17,6 +17,7 @@
 						class="btn btn-light btn-xs" th:utext="#{text.global.volver}">
 						volver </a>
 					 <a class="btn btn-danger btn-xs float-right" th:href="@{'/factura/ver/' + ${factura.id}(format=pdf)}">PDF</a>
+					 <a class="btn btn-success btn-xs float-right" th:href="@{'/factura/ver/' + ${factura.id}(format=xlsx)}">XLS</a>
 
 				</h4>
 

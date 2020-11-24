@@ -64,7 +64,7 @@ public class ClienteController {
 	@Secured({ "ROLE_USER" })
 	@GetMapping(value = "/uploads/{filename:.+}")
 	public ResponseEntity<Object> verFoto(@PathVariable String filename) {
-		
+
 		Resource recurso = null;
 
 		try {
@@ -74,12 +74,9 @@ public class ClienteController {
 					.body(recurso);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
-		        return ResponseEntity
-		            .status(HttpStatus.BAD_REQUEST)
-		            .body("Error Message");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error Message");
 		}
 
-	
 	}
 
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -99,9 +96,11 @@ public class ClienteController {
 		return "ver";
 	}
 
+
 	@RequestMapping(value = { "/listar", "/" }, method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
-			Authentication authenticacion, HttpServletRequest request, Locale locale) {
+			Authentication authenticacion, HttpServletRequest request, Locale locale,
+			@RequestParam(name = "format", defaultValue = "html") String format) {
 
 		if (authenticacion != null) {
 			logger.info("Hola, tu username es: ".concat(authenticacion.getName()));
@@ -135,14 +134,17 @@ public class ClienteController {
 			logger.info("Usando HttpServletRequest: Hola. ".concat(auth.getName()).concat(" NO tienes acceso!"));
 		}
 
-		Pageable pageRequest = PageRequest.of(page, 4);
+		if (format.equals("html")) {
+			Pageable pageRequest = PageRequest.of(page, 4);
 
-		Page<Cliente> clientes = clienteService.findAll(pageRequest);
+			Page<Cliente> clientes = clienteService.findAll(pageRequest);
 
-		PageRender<Cliente> pageRender = new PageRender<Cliente>("/listar", clientes);
-		model.addAttribute("titulo", messageSource.getMessage("text.cliente.listar.titulo", null, locale));
-		model.addAttribute("clientes", clientes);
-		model.addAttribute("page", pageRender);
+			PageRender<Cliente> pageRender = new PageRender<Cliente>("/listar", clientes);
+			model.addAttribute("clientes", clientes);
+			model.addAttribute("page", pageRender);
+		} else {
+			model.addAttribute("clientes", clienteService.findAll());
+		}
 		return "listar";
 	}
 
